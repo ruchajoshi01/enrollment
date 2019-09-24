@@ -12,5 +12,13 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(readxl)
 library(tidyverse)
-x <- read_xlsx("class_enrollment_summary_by_term_9.17.19.xlsx", skip = 3)
+library(janitor)
+x <- read_xlsx("class_enrollment_summary_by_term_9.17.19.xlsx", skip = 3) %>%
+  clean_names() %>%
+  filter(course_department == "Government") %>%
+  arrange(desc(total)) %>%
+  select(course_title, course_name, u_grad) %>%
+  slice(1:7)
+
+x
 ```
